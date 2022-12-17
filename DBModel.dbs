@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="PowerOfAttorney" id="Project-683" database="SqlServer" >
+	<schema name="dbo" catalogname="PowerOfAttorney" >
+		<table name="Tbl" />
+		<table name="Tbl_0" />
+		<table name="Tbl_1" />
+		<table name="tblAccount" prior="tblAct" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="CustNoId" type="bigint" jt="-5" />
+			<column name="ActNoId" type="bigint" jt="-5" />
+			<column name="FName" prior="Fname" type="nvarchar" length="100" jt="12" />
+			<column name="LName" type="nvarchar" length="100" jt="12" />
+			<column name="SrcBranchCode" type="int" length="100" jt="4" />
+			<column name="SrcBranchName" type="nvarchar" length="100" jt="12" />
+			<column name="DstBranchCode" type="int" jt="4" />
+			<column name="DstBranchName" type="nvarchar" length="100" jt="12" />
+			<column name="State" type="int" jt="4" />
+			<column name="DescMantaghe" type="nvarchar(max)" jt="12" />
+			<column name="DescAmaliat" type="nvarchar(max)" jt="12" />
+			<column name="UserId" type="bigint" jt="-5" />
+			<column name="UserShowName" type="nvarchar" length="200" jt="12" />
+			<index name="pk_tblAccount" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<fk name="fk_tblAccount_tblDocument" to_schema="PowerOfAttorney.dbo" to_table="tblDocument" >
+				<fk_column name="Id" pk="tblAccountId" />
+			</fk>
+			<fk name="fk_tblAccount_tblStepResultHistory" to_schema="PowerOfAttorney.dbo" to_table="tblStepResultHistory" >
+				<fk_column name="Id" pk="tblAccountId" />
+			</fk>
+		</table>
+		<table name="tblDetail" prior="tblD" >
+			<column name="Id" type="bigint" length="100" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="NameEn" type="varchar" length="100" jt="12" />
+			<column name="NameFa" type="nvarchar" length="100" jt="12" />
+			<column name="tblTypeId" type="bigint" jt="-5" />
+			<index name="pk_tblDetail" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblDetail_tblTypeId" unique="UNIQUE_KEY" >
+				<column name="tblTypeId" />
+			</index>
+			<fk name="fk_tblDetail_tblDetailValue" to_schema="PowerOfAttorney.dbo" to_table="tblDetailValue" >
+				<fk_column name="Id" pk="tblDetailId" />
+			</fk>
+		</table>
+		<table name="tblDetailValue" prior="tblDe" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="tblDetailId" type="bigint" jt="-5" />
+			<column name="tblPowerOfAttorneyId" type="bigint" jt="-5" />
+			<column name="Value" type="nvarchar(max)" jt="12" />
+			<column name="IsDeleted" type="bit" jt="-7" />
+			<index name="pk_tblDetailValue" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblDetailValue_tblDetailId" unique="UNIQUE_KEY" >
+				<column name="tblDetailId" />
+			</index>
+			<index name="unq_tblDetailValue_tblPowerOfAttorneyId" unique="UNIQUE_KEY" >
+				<column name="tblPowerOfAttorneyId" />
+			</index>
+		</table>
+		<table name="tblDocument" prior="tblDoc" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="Path" type="nvarchar" length="1000" jt="12" />
+			<column name="InsDate" type="int" jt="4" />
+			<column name="InsTime" type="int" jt="4" />
+			<column name="tblAccountId" type="bigint" jt="-5" />
+			<index name="pk_tblDocument" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblDocument_tblAccountId" unique="UNIQUE_KEY" >
+				<column name="tblAccountId" />
+			</index>
+		</table>
+		<table name="tblDocuments" prior="Tbl_2" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="tblPowerOfPattorneyId" type="bigint" jt="-5" />
+			<column name="tblTitleDocId" type="bigint" jt="-5" />
+			<column name="FTPPathFile" type="varchar" length="1000" jt="12" />
+			<column name="FileSize" type="bigint" jt="-5" />
+			<column name="UploadDate" type="int" jt="4" />
+			<column name="UplaodTime" type="int" jt="4" />
+			<column name="UserId" type="bigint" jt="-5" />
+			<index name="pk_Tbl_2" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblDocuments_tblPowerOfPattorneyId" unique="UNIQUE_KEY" >
+				<column name="tblPowerOfPattorneyId" />
+			</index>
+			<index name="unq_tblDocuments_tblTitleDocId" unique="UNIQUE_KEY" >
+				<column name="tblTitleDocId" />
+			</index>
+		</table>
+		<table name="tblPowerOfAttorney" prior="tblPowerOfPattorney" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="tblTipId" type="bigint" jt="-5" />
+			<column name="tblSubTypeId" type="bigint" jt="-5" />
+			<column name="Text" type="nvarchar(max)" length="250" jt="12" />
+			<column name="UserId" type="bigint" jt="-5" />
+			<column name="CurrentStep" type="int" jt="4" />
+			<column name="InsDate" type="int" jt="4" />
+			<column name="InsTime" type="int" jt="4" />
+			<column name="PowerOfAttorneyNO" type="nvarchar(max)" jt="12" >
+				<comment><![CDATA[شماره وکالت نامه]]></comment>
+			</column>
+			<column name="ConfirmationNO" type="nvarchar(max)" jt="12" >
+				<comment><![CDATA[شماره تصدیق وکالتنامه]]></comment>
+			</column>
+			<column name="LetterNO" prior="LetterN" type="nvarchar(max)" jt="12" >
+				<comment><![CDATA[شماره مصوبه / نامه مبنای وکالت نامه]]></comment>
+			</column>
+			<column name="DatePowerOfAttornet" prior="DateP" type="int" jt="4" >
+				<comment><![CDATA[تاریخ وکالت نامه]]></comment>
+			</column>
+			<column name="FnameConstituent" type="nvarchar" length="100" jt="12" >
+				<comment><![CDATA[نام موکل]]></comment>
+			</column>
+			<column name="LnameConstituent" type="nvarchar" length="100" jt="12" >
+				<comment><![CDATA[نام خانوادگی موکل]]></comment>
+			</column>
+			<column name="NationalCodeConstituent" prior="Nati" type="nvarchar" length="11" jt="12" >
+				<comment><![CDATA[کد ملی یا شناسه ملی موکل]]></comment>
+			</column>
+			<column name="AddressConstituent" type="nvarchar" length="700" jt="12" >
+				<comment><![CDATA[آدرس موکل]]></comment>
+			</column>
+			<column name="TelNOConstituent" prior="TelNConstituent" type="nvarchar" length="100" jt="12" >
+				<comment><![CDATA[تلفن موکل]]></comment>
+			</column>
+			<column name="FnameLawyer" type="nvarchar" length="100" jt="12" >
+				<comment><![CDATA[نام وکیل]]></comment>
+			</column>
+			<column name="LnameLawyer" type="nvarchar" length="100" jt="12" >
+				<comment><![CDATA[نام خانوادگی وکیل]]></comment>
+			</column>
+			<column name="NationalCodeLawyer" type="nvarchar" length="11" jt="12" >
+				<comment><![CDATA[کدملی وکیل]]></comment>
+			</column>
+			<column name="AddressLawyer" type="nvarchar" length="100" jt="12" >
+				<comment><![CDATA[آدرس وکیل]]></comment>
+			</column>
+			<column name="TelNOLawyer" type="nvarchar" length="20" jt="12" >
+				<comment><![CDATA[تلفن وکیل]]></comment>
+			</column>
+			<column name="TypePowreOfAttorney" type="nvarchar" length="100" jt="12" >
+				<comment><![CDATA[نوع وکالت نامه]]></comment>
+			</column>
+			<column name="limitsAttorney" type="bigint" jt="-5" >
+				<comment><![CDATA[حدود اختیارات وکیل]]></comment>
+			</column>
+			<column name="PowerOfAttorneyStatus" type="nvarchar" length="1000" jt="12" >
+				<comment><![CDATA[وضعیت وکالتنامه]]></comment>
+			</column>
+			<column name="ValidityDate" type="int" jt="4" >
+				<comment><![CDATA[تاریخ اعتبار وکالتنامه]]></comment>
+			</column>
+			<column name="Settinglocation" type="nvarchar" length="200" jt="12" >
+				<comment><![CDATA[محل تنظیم وکالتنامه]]></comment>
+			</column>
+			<column name="IsDeleted" type="bit" jt="-7" />
+			<index name="pk_tblPowerOfPattorney" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblPowerOfPattorney_tblTipId" unique="UNIQUE_KEY" >
+				<column name="tblTipId" />
+			</index>
+			<index name="unq_tblPowerOfPattorney_CurrentStep" unique="UNIQUE_KEY" >
+				<column name="CurrentStep" />
+			</index>
+			<index name="unq_tblPowerOfAttorney_tblSubTypeId" unique="UNIQUE_KEY" >
+				<column name="tblSubTypeId" />
+			</index>
+			<fk name="fk_tblPowerOfPattorney_tblPowerOfPattorneyHistory" to_schema="PowerOfAttorney.dbo" to_table="tblPowerOfPattorneyHistory" >
+				<fk_column name="Id" pk="tblPowerOfPattorneyId" />
+			</fk>
+			<fk name="fk_tblPowerOfPattorney_tblDocuments" to_schema="PowerOfAttorney.dbo" to_table="tblDocuments" >
+				<fk_column name="Id" pk="tblPowerOfPattorneyId" />
+			</fk>
+			<fk name="fk_tblPowerOfPattorney_tblDetailValue" to_schema="PowerOfAttorney.dbo" to_table="tblDetailValue" >
+				<fk_column name="Id" pk="tblPowerOfAttorneyId" />
+			</fk>
+		</table>
+		<table name="tblPowerOfPattorneyHistory" prior="tblPowerOfPattorneyHi" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="tblPowerOfPattorneyId" type="bigint" jt="-5" />
+			<column name="StepName" type="varchar" length="100" jt="12" />
+			<column name="CurrentStepId" prior="CurrentStepName" type="bigint" length="100" jt="-5" />
+			<column name="StepStateName" type="varchar" length="100" jt="12" />
+			<column name="Comment" type="nvarchar" length="500" jt="12" />
+			<column name="UserId" type="bigint" jt="-5" />
+			<column name="InsDate" type="int" jt="4" />
+			<column name="InsTime" type="int" jt="4" />
+			<column name="IsDeleted" type="bit" jt="-7" />
+			<index name="pk_tblPowerOfPattorneyHistory" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblPowerOfPattorneyHistory_tblPowerOfPattorneyId" unique="UNIQUE_KEY" >
+				<column name="tblPowerOfPattorneyId" />
+			</index>
+			<index name="unq_tblPowerOfPattorneyHistory_StepName" unique="UNIQUE_KEY" >
+				<column name="StepName" />
+			</index>
+			<index name="unq_tblPowerOfPattorneyHistory_CurrentStepId" unique="UNIQUE_KEY" >
+				<column name="CurrentStepId" />
+			</index>
+			<index name="unq_tblPowerOfPattorneyHistory_StepStateName" unique="UNIQUE_KEY" >
+				<column name="StepStateName" />
+			</index>
+		</table>
+		<table name="tblSettingsAccount" prior="tblChangeRoute" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="TypeAccount" prior="Type" type="char" length="2" jt="1" />
+			<column name="NextStep" type="bigint" jt="-5" />
+			<column name="WageAmount" type="bigint" jt="-5" />
+			<index name="pk_tblChangeRoute" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+		</table>
+		<table name="tblSpecializedUnit" prior="tblSpecializ" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="Name" type="nvarchar" length="100" jt="12" />
+			<column name="CorpId" type="bigint" jt="-5" />
+			<column name="InsDate" type="int" jt="4" />
+			<column name="InsTime" type="int" jt="4" />
+			<column name="IsDeleted" type="bit" jt="-7" />
+			<index name="pk_tblSpecializedUnit" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<fk name="fk_tblSpecializedUnit_tblType" to_schema="PowerOfAttorney.dbo" to_table="tblType" >
+				<fk_column name="Id" pk="tblSpecializedUserId" />
+			</fk>
+		</table>
+		<table name="tblStep" prior="tbl" >
+			<column name="Id" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="NameEn" type="varchar" length="100" jt="12" />
+			<column name="NameFa" type="nvarchar" length="100" jt="12" />
+			<column name="Code" type="int" jt="4" />
+			<column name="IsActive" type="int" jt="4" />
+			<index name="pk_tblStep" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<fk name="fk_tblStep_tblTipHistory" to_schema="PowerOfAttorney.dbo" to_table="tblTipHistory" >
+				<fk_column name="NameEn" pk="StepName" />
+			</fk>
+			<fk name="fk_tblStep_tblPowerOfPattorney" to_schema="PowerOfAttorney.dbo" to_table="tblPowerOfAttorney" >
+				<fk_column name="Id" pk="CurrentStep" />
+			</fk>
+			<fk name="fk_tblStep_tblTipHistory_0" to_schema="PowerOfAttorney.dbo" to_table="tblTipHistory" >
+				<fk_column name="Id" pk="CurrentStepId" />
+			</fk>
+			<fk name="fk_tblStep_tblPowerOfPattorneyHistory" to_schema="PowerOfAttorney.dbo" to_table="tblPowerOfPattorneyHistory" >
+				<fk_column name="NameEn" pk="StepName" />
+			</fk>
+			<fk name="fk_tblStep_tblPowerOfPattorneyHistory_0" to_schema="PowerOfAttorney.dbo" to_table="tblPowerOfPattorneyHistory" >
+				<fk_column name="Id" pk="CurrentStepId" />
+			</fk>
+		</table>
+		<table name="tblStepResultHistory" prior="StepResultHistory" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="tblAccountId" type="bigint" jt="-5" />
+			<column name="StepName" type="varchar" length="100" jt="12" />
+			<column name="StepState" type="varchar" length="100" jt="12" />
+			<column name="Message" type="nvarchar" length="4000" jt="12" />
+			<column name="tblStepId" type="bigint" jt="-5" />
+			<column name="InsDate" type="int" jt="4" />
+			<column name="InsTime" type="int" jt="4" />
+			<column name="UserId" type="bigint" jt="-5" />
+			<column name="UserShowname" type="nvarchar" length="100" jt="12" />
+			<index name="pk_tblStepResultHistory" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblStepResultHistory_tblAccountId" unique="UNIQUE_KEY" >
+				<column name="tblAccountId" />
+			</index>
+			<index name="unq_tblStepResultHistory_StepState" unique="UNIQUE_KEY" >
+				<column name="StepState" />
+			</index>
+			<index name="unq_tblStepResultHistory_tblStepId" unique="UNIQUE_KEY" >
+				<column name="tblStepId" />
+			</index>
+			<index name="unq_tblStepResultHistory_StepName" unique="UNIQUE_KEY" >
+				<column name="StepName" />
+			</index>
+		</table>
+		<table name="tblStepState" prior="Tbl_1" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="NameEn" type="varchar" length="100" jt="12" />
+			<column name="NameFa" type="nvarchar" length="100" jt="12" />
+			<column name="Code" type="int" jt="4" />
+			<index name="pk_tblStepState" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<fk name="fk_tblStepState_tblTipHistory" to_schema="PowerOfAttorney.dbo" to_table="tblTipHistory" >
+				<fk_column name="NameEn" pk="StepStateName" />
+			</fk>
+			<fk name="fk_tblStepState_tblPowerOfPattorneyHistory" to_schema="PowerOfAttorney.dbo" to_table="tblPowerOfPattorneyHistory" >
+				<fk_column name="NameEn" pk="StepStateName" />
+			</fk>
+		</table>
+		<table name="tblStepStates" prior="StepStates" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="NameEn" type="varchar" length="100" jt="12" />
+			<column name="NameFa" type="nvarchar" length="100" jt="12" />
+			<column name="Code" type="int" jt="4" />
+			<index name="pk_tblStepStates" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<fk name="fk_tblStepStates_tblStepResultHistory" to_schema="PowerOfAttorney.dbo" to_table="tblStepResultHistory" >
+				<fk_column name="NameEn" pk="StepState" />
+			</fk>
+		</table>
+		<table name="tblSteps" prior="Tbl_1" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="NameEn" type="varchar" length="100" jt="12" />
+			<column name="NameFa" type="nvarchar" length="100" jt="12" />
+			<column name="Code" type="int" jt="4" />
+			<column name="IsActive" type="int" jt="4" />
+			<index name="pk_Tbl_1" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<fk name="fk_tblSteps_tblStepResultHistory" to_schema="PowerOfAttorney.dbo" to_table="tblStepResultHistory" >
+				<fk_column name="Id" pk="tblStepId" />
+			</fk>
+			<fk name="fk_tblSteps_tblStepResultHistory_0" to_schema="PowerOfAttorney.dbo" to_table="tblStepResultHistory" >
+				<fk_column name="NameEn" pk="StepName" />
+			</fk>
+		</table>
+		<table name="tblSubType" prior="tbl" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="tblTypeId" type="bigint" jt="-5" />
+			<column name="Name" type="nvarchar" length="100" jt="12" />
+			<column name="InsDate" type="int" jt="4" />
+			<column name="InsTime" prior="IntTime" type="int" jt="4" />
+			<column name="UserId" type="bigint" jt="-5" />
+			<column name="IsDeleteed" type="bit" jt="-7" />
+			<index name="pk_tblSubType" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblSubType_tblTypeId" unique="UNIQUE_KEY" >
+				<column name="tblTypeId" />
+			</index>
+			<fk name="fk_tblSubType_tblTip" to_schema="PowerOfAttorney.dbo" to_table="tblTip" >
+				<fk_column name="Id" pk="tblSubTypeId" />
+			</fk>
+			<fk name="fk_tblSubType_tblPowerOfAttorney" to_schema="PowerOfAttorney.dbo" to_table="tblPowerOfAttorney" >
+				<fk_column name="Id" pk="tblSubTypeId" />
+			</fk>
+		</table>
+		<table name="tblTip" prior="Tbl" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="tblSubTypeId" type="bigint" jt="-5" />
+			<column name="Text" type="nvarchar(max)" jt="12" />
+			<column name="CountVariable" type="int" jt="4" />
+			<column name="InsDate" type="int" jt="4" />
+			<column name="InsTime" type="int" jt="4" />
+			<column name="UserId" type="bigint" jt="-5" />
+			<column name="IsDoneFlow" type="bit" length="1" jt="-7" />
+			<column name="CurrentStep" type="int" jt="4" />
+			<column name="IsDeleted" type="bit" jt="-7" />
+			<index name="pk_tblTip" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblTip_tblSubTypeId" unique="UNIQUE_KEY" >
+				<column name="tblSubTypeId" />
+			</index>
+			<fk name="fk_tblTip_tblTipHistory" to_schema="PowerOfAttorney.dbo" to_table="tblTipHistory" >
+				<fk_column name="Id" pk="tblTipId" />
+			</fk>
+			<fk name="fk_tblTip_tblPowerOfPattorney" to_schema="PowerOfAttorney.dbo" to_table="tblPowerOfAttorney" >
+				<fk_column name="Id" pk="tblTipId" />
+			</fk>
+		</table>
+		<table name="tblTipHistory" prior="tblTipHistoriry" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="tblTipId" type="bigint" jt="-5" />
+			<column name="StepName" type="varchar" length="100" jt="12" />
+			<column name="CurrentStepId" type="bigint" jt="-5" />
+			<column name="StepStateName" type="varchar" length="100" jt="12" />
+			<column name="Comment" type="nvarchar" length="1000" jt="12" />
+			<column name="UserId" type="bigint" jt="-5" />
+			<column name="InsDate" type="int" jt="4" />
+			<column name="InsTime" type="int" jt="4" />
+			<column name="IsDeledet" type="bit" jt="-7" />
+			<index name="pk_tblTipHistory" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblTipHistory_tblTipId" unique="UNIQUE_KEY" >
+				<column name="tblTipId" />
+			</index>
+			<index name="unq_tblTipHistory_StepStateName" unique="UNIQUE_KEY" >
+				<column name="StepStateName" />
+			</index>
+			<index name="unq_tblTipHistory_StepName" unique="UNIQUE_KEY" >
+				<column name="StepName" />
+			</index>
+			<index name="unq_tblTipHistory_CurrentStepId" unique="UNIQUE_KEY" >
+				<column name="CurrentStepId" />
+			</index>
+		</table>
+		<table name="tblTitleDoc" prior="tblTitle" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="Title" type="nvarchar" length="100" jt="12" />
+			<index name="pk_tblTitleDoc" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<fk name="fk_tblTitleDoc_tblDocuments" to_schema="PowerOfAttorney.dbo" to_table="tblDocuments" >
+				<fk_column name="Id" pk="tblTitleDocId" />
+			</fk>
+		</table>
+		<table name="tblType" >
+			<column name="Id" type="bigint" jt="-5" mandatory="y" >
+				<identity><![CDATA[IDENTITY(1,1)]]></identity>
+			</column>
+			<column name="Name" type="nvarchar" length="200" jt="12" />
+			<column name="tblSpecializedUserId" type="bigint" jt="-5" />
+			<column name="InsDate" type="int" jt="4" />
+			<column name="InsTime" type="int" jt="4" />
+			<column name="IsDeleted" type="bit" jt="-7" />
+			<index name="pk_tblType" unique="PRIMARY_KEY" >
+				<column name="Id" />
+			</index>
+			<index name="unq_tblType_tblSpecializedUserId" unique="UNIQUE_KEY" >
+				<column name="tblSpecializedUserId" />
+			</index>
+			<fk name="fk_tblType_tblSubType" to_schema="PowerOfAttorney.dbo" to_table="tblSubType" >
+				<fk_column name="Id" pk="tblTypeId" />
+			</fk>
+			<fk name="fk_tblType_tblDetail" to_schema="PowerOfAttorney.dbo" to_table="tblDetail" >
+				<fk_column name="Id" pk="tblTypeId" />
+			</fk>
+		</table>
+	</schema>
+	<connector name="MyDb" database="MySql" host="localhost" port="3306" user="root" useSystemProxy="false" />
+	<layout name="CodeBranch" id="Layout-1526" show_relation="columns" >
+		<entity schema="PowerOfAttorney.dbo" name="tblAccount" color="C1D8EE" x="48" y="112" />
+		<entity schema="PowerOfAttorney.dbo" name="tblDocument" color="C1D8EE" x="304" y="64" />
+		<entity schema="PowerOfAttorney.dbo" name="tblSettingsAccount" color="C1D8EE" x="256" y="256" />
+		<entity schema="PowerOfAttorney.dbo" name="tblStepResultHistory" color="C1D8EE" x="416" y="224" />
+		<entity schema="PowerOfAttorney.dbo" name="tblStepStates" color="C1D8EE" x="528" y="48" />
+		<entity schema="PowerOfAttorney.dbo" name="tblSteps" color="C1D8EE" x="640" y="240" />
+	</layout>
+	<layout name="Layout" id="Layout-25f2" confirmed="y" show_relation="columns" >
+		<entity schema="PowerOfAttorney.dbo" name="tblDetail" color="C1D8EE" x="640" y="304" />
+		<entity schema="PowerOfAttorney.dbo" name="tblDetailValue" color="C1D8EE" x="656" y="464" />
+		<entity schema="PowerOfAttorney.dbo" name="tblDocuments" color="C1D8EE" x="208" y="416" />
+		<entity schema="PowerOfAttorney.dbo" name="tblPowerOfAttorney" color="C1D8EE" x="416" y="512" />
+		<entity schema="PowerOfAttorney.dbo" name="tblPowerOfPattorneyHistory" color="C1D8EE" x="416" y="272" />
+		<entity schema="PowerOfAttorney.dbo" name="tblSpecializedUnit" color="3986C1" x="96" y="48" />
+		<entity schema="PowerOfAttorney.dbo" name="tblStep" color="C1D8EE" x="256" y="112" />
+		<entity schema="PowerOfAttorney.dbo" name="tblStepState" color="C1D8EE" x="464" y="128" />
+		<entity schema="PowerOfAttorney.dbo" name="tblSubType" color="C1D8EE" x="64" y="368" />
+		<entity schema="PowerOfAttorney.dbo" name="tblTip" color="C1D8EE" x="64" y="544" />
+		<entity schema="PowerOfAttorney.dbo" name="tblTipHistory" color="C1D8EE" x="640" y="80" />
+		<entity schema="PowerOfAttorney.dbo" name="tblTitleDoc" color="C1D8EE" x="224" y="320" />
+		<entity schema="PowerOfAttorney.dbo" name="tblType" color="3986C1" x="48" y="208" />
+	</layout>
+</project>
